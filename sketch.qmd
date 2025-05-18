@@ -1,0 +1,54 @@
+# Ideas for writing the model in R/socmod
+
+## Candidate model components for first draft
+
+### Independent input parameters/configuration
+
+-   Primary: social network structure. Some real-world structrual variables: collectivist-individualist, network fragmentation, group structure (homophily minority-majority networks). We'll start with small-world networks, which can represent several of these features.
+
+-   Initial disparity in knowledge about how long until a disaster event
+
+-   Risk strategies: represented as a correlation between risk perception and the probability of taking action (action being EITHER mitigative or migratory behavior)
+
+-   Frequency of disasters
+
+### Model dynamics
+
+#### Behavior 
+
+- mitigate/legacy
+- migrate/stay
+
+#### Meta-behavior: risk strategy
+
+- partly agent-level opinion: what is my personal correlation between risk perception and mitigation behavior?
+- first pass: initialize from a distribution or use a single value
+- social influence could affect this correlation
+
+#### Environment
+
+- modeling stochastic disaster: given approximate period of disaster, e.g., $T = 365$ would be yearly, but we'll probably start with $T=\tau_d N$ 
+- adaptive behaviors change event structure: more people doing the mitigation behavior means less damage when disaster occurs
+
+#### Agent attributes and processes: learning and interaction
+
+- at each step every agent chooses an interaction partner, interacts with them, and possibly chooses a behavior to adopt on the next time step
+
+
+##### Learning strategy
+
+1. **Random:** partner selection random among neighbors
+1. **Prestige-biased:** partner selection weighted by degree
+1. **Frequency-biased:** behavior sampling is weighted by behavioral adoption
+frequency among neighbors; no explicit partner selection
+
+
+
+##### Behavior choice
+
+
+### Outcome measures 
+
+- Total number of migrants
+- Migration rate
+- Adaptive strategies
