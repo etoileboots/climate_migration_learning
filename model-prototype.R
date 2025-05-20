@@ -1,21 +1,36 @@
-# devtools::install_github("css4s/socmod")
-
-library(socmod)
+# Import required libraries
+Sys.setenv(GITHUB_PAT = "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")
+devtools::install_github("css4s/socmod")
+library(ggnetwork)
+library(purrr)
 library(magrittr)
 library(ggplot2)
+library(igraph)
+library(socmod)
 
-graph <- make_small_world(20, 6, p = 0.2)
-plot(graph)
+# Intialize a small world graph with size N and degree k 
+N <- 20 # Let's start with the small number 20 
+k <- 6 # Degree k = 6, each individual will have 6 connections
+small_world_graph <- make_small_world(N, k, p = 0.2)
 
+# Plot the graph 
+plot(small_world_graph)
 
-abm <- make_abm(graph = graph)
-plot(abm$get_network())
-
-
-initialize_agents(abm, initial_prevalence = 0.2, adaptive_fitness = 1.2,
-                  legacy_fitness = 1.0)
-
-
+abm <- make_abm(graph = small_world_graph)
+# Initialize 20% (4) agents with adaptive behvaior w/ 
+# an adaptive fitness 1.2x of non-adaptive legacy behavior
+initialize_agents(abm, initial_prevalence = 0.2, adaptive_fitness = 1.2)
+# Visually inspect the initialization to see that 
+# N*p agents have adopted adaptive behavior
+p <- plot_network_adoption(
+  abm, layout = igraph::in_circle(),
+  plot_mod = \(p)p + ggtitle("Adoption of Adaptive Behavior at t=0",
+                             edgewidth=0.75)
+)
+p <- socmod::plot_network_adoption(
+  abm, layout = igraph::in_circle(), 
+  plot_mod = \(p) p + ggtitle("Adoption at t = 0"), edgewidth = 0.75
+)
 # Check table of behaviors to count them
 behaviors <- purrr::map_vec(abm$agents, \(a) a$get_behavior())
 table(behaviors)
