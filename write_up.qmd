@@ -1,96 +1,216 @@
 ---
-title: "Modeling the Trade-Off Between Migration and Collective Resilience Under Long-Term Climate Stress"
+title: "Agent Based Model of Climate Change Mitigation, Migration, and "
 format: html
 editor: visual
 ---
 
 ## Introduction & Motivation
 
-Climate change will drastically affect the livelihoods of many in novel and heterogeneous ways. This is not news. Despite this awareness, individuals often perceive the effects of climate change distantly, both in time and space ([Markman, 2018](https://hbr.org/2018/10/why-people-arent-motivated-to-address-climate-change)). Thus, current issues seem more pressing than the longer-term complexities and uncertainties surrounding the impending crisis. This mindset is especially persistent in North America, where the concern of climate change is split between ideological differences ([Pew Research, 2013](https://www.pewresearch.org/short-reads/2013/09/27/u-s-stands-out-as-among-the-least-concerned-about-climate-change/#:~:text=Only%20financial%20instability%20conjures%20a,compared%20with%2057%25%20of%20Democrats.)) 
+When it comes to climate change, there are a couple things for certain: the climate is changing, and that such changes will force speedy adaptation to survive in novel situations. This shift in climate has been spurred by human activity and led to globally increases in overall surface temperatures and uncertainty surrounding the strength and frequency of different weather conditions.
 
-Regardless of personal belief preferences, climate change continues to increase the intensity and rate of such disasters, and the risk of disaster personally impacting every individual increases. At what point will we begin to act in accordance with the provided information of increasing risks? What will it take for both individuals and communities to mitigate and/or adapt to such risks? 
+Despite the clear knowledge of probable future impacts, communities and individuals often respond to climate-related risks with delayed response and denial. The effects of climate change are considered distantly, both in time and space ([Markman, 2018](https://hbr.org/2018/10/why-people-arent-motivated-to-address-climate-change)). Thus, this behavior may be best understood when considering human decision making under uncertainty, as opposed to risk. While these terms are often used interchangeably, in this paper, we continue with defining risk as decision making under known outcome probabilities and state space, and uncertainty being decision making under unknown outcome probabilities and state space ([Knight](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref35), [1921](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref35); [Keynes, 1921](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref33); [Johnson et al, 2022](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref30)).
 
-This study explores these questions through agent-based modeling (ABM). An ABM is built to explore alternative adaptation strategies in a community increasingly at risk for mass climate disasters, such as wildfires. This case study is largely inspired by the January and February 2025 Palisades and Eaton Fires in Los Angeles, CA, which took 29 lives and engulfed over 23,000 acres and 16,000 homes ([MacCarthy & Richter, 2025](https://www.wri.org/insights/los-angeles-fires-january-2025-explained)). The rising global temperatures have created a breeding ground for the ignition and spread of wildlfires. One study estimated that climate change made L.A.’s fires 35% more likely to occur ([source](https://www.worldweatherattribution.org/climate-change-increased-the-likelihood-of-wildfire-disaster-in-highly-exposed-los-angeles-area/)). In such a case, individuals did not migrate nor develop thorough disaster adaptation strategies. This fits more generally into trends of disaster and migration, where migration only increases through extreme destruction of the built environment ([Price et al., 2024](https://www.nature.com/articles/s41467-024-50630-4)). 
+So, how can communities make decisions in the face of uncertainty versus risk? What will it take for both individuals and communities to mitigate and adapt to such risk and uncertainty? 
 
-Through building and evaluating an ABM to represent this social scenario, the researchers are able to explore alternative behaviors. Thus, we may be able to analyze the conditions that are required to enact long-term adaptive strategies.
+This study explores these questions through an agent-based model (ABM) simulating a social network under increasing threat of climate-related disasters, focusing particularly on the case of wildfires. The context for this model is largely inspired by the January and February 2025 Palisades and Eaton Fires in Los Angeles, CA, which took 29 lives and engulfed over 23,000 acres and 16,000 homes ([MacCarthy & Richter, 2025](https://www.wri.org/insights/los-angeles-fires-january-2025-explained)). A recent attribution study estimated that climate change made L.A.’s fires 35% more likely to occur ([source](https://www.worldweatherattribution.org/climate-change-increased-the-likelihood-of-wildfire-disaster-in-highly-exposed-los-angeles-area/)). Despite clear signals, many residents did not migrate or adopt long-term adaptation strategies.
 
-## Model
+This behavior is consistant with broader patterns: migration or adaptive behaviors often occurs only after extreme destruction, rather in the anticipation of growing risk ([Price et al., 2024](https://www.nature.com/articles/s41467-024-50630-4)). In other words, people tend to adapt reactively rather than proactively.
 
-In this section, we detail the model parameters and dynamics.
+To examine the underlying dynamics of this delayed response, the ABM simulates agents with different behavioral strategies (adaptive, legacy, and migrated), varying perceptions of disaster risk, and social learning rules. It is important to note here that this study distinguishes between risk (known probabilities of disaster) and uncertainty (unknown probabilities), inspired by frameworks within decision theory (Jones, ),
 
-### Parameters
+## Literature Review:
 
--   $N$: Number of agents
+\[to be added later\]
 
--   $\bar{k}$: Average degree
+## Methods
 
--   Network structures (Small world, Minority-Majority)
-
--    $p_{A0},  p_{L0}, p_{M0}$: Initial prevalence of individuals in adaptive, legacy, and migrated states
-
--   $f_{A}, f_{L}, f_{M}$: Fitness values of adaptive behavior, legacy behavior, and migrated behavior
-
--   $T$: Total number of time steps
-
--   $p(D)$: Probability of disaster at each time step
-
--   $L$: Learning strategy
-
--   $u$: Utility value of holding some behavior
-
--   $r$: Adoption rate
-
-### Dynamics 
-
-1.  At t = 0, Initialization of migrated, legacy, and adaptive prevalence, $u=f_{A}, f_{L}, f_{M}$
-2.  For each time step from t=0 to T:
-    1.  **Disaster Simulation***: Draft #1* = Probabilistic with $p(D)$, *Draft #2* = $p(D)$ impacted by $p_A$,
-
-        1.  If disaster occurs $D = 1$, else, $D=0$
-
-    2.  **Disaster Response**:
-
-        1.  If $D=1$: $u_{i_{t+1}} = u_{i_{t}}-d$
-        2.  $u_{i_{t}}=u_{i_{t+1}}$
-        3.  If $u_{i_t} == 0$, migrate
-
-    3.  **Agent Learning Mechanisms (for each agent)**
-
-        *Pre-interaction checking...*
-
-        1.  If agent has migrated, skip
-        2.  If agent is performing adaptive behavior,
-            1.  If \# neighbors.behavior \>= 1/2 \* \# neighbors: (Considering this to be majority cooperation), increase utility by cooperation payoff value
-            2.  Else, continue
-        3.  Select teacher based on $L$
-        4.  If $u(teacher)>u(agent)$
-            1.  Agent adopts teacher behavior with some adoption rate $r$
-        5.  Interact with teacher: Compare current utility value, and update behavior and future utility value
-        6.  Count total individuals taking on certain behavior
-        7.  Loop
-
-    4.  **Stopping Condition:** Run until fixation
-
-### Computational Experiments: 
-
--   Vary learning strategy
-
--   Vary initial parameters
-
--   Vary cooperation payoffs
-
--   Vary network structures
-
--   Vary disaster situation
+### Overview
 
 ```{r}
-# Initialization 
-N <- 20 # Agents
-k <-  5 # Mean degree
-f_A, f_L, f_M <- 1.1, 1, 0.8 # Fitness of various behaviors 
-p_A, p_L, p_M <- 0.2, 0.7, 0.1 # Initial prevalence of individuals of different behaviors (so, there should be 4 adaptive, 14 legacy, and 2 migrated)
-p_D <- 0.05 # On average, there is a disaster every 50 steps, with the p(D) = 5% 
-r <- 0.6 # learning rate 
+#| echo: false
+# Load required libraries
+library(igraph)
+library(ggraph)
+library(tidygraph)
+library(ggplot2)
 
+# Parameters
+set.seed(42)
+N <- 30  # number of agents
 
+# Assign behaviors randomly
+behavior_types <- c("Adaptive", "Legacy", "Migrated")
+behaviors <- sample(behavior_types, N, replace = TRUE, prob = c(0.4, 0.4, 0.2))
+
+# Create a small-world network
+g <- sample_smallworld(1, N, nei = 2, p = 0.05)
+
+# Assign attributes
+V(g)$behavior <- behaviors
+V(g)$color <- ifelse(behaviors == "Adaptive", "#1b9e77",
+              ifelse(behaviors == "Legacy", "#7570b3", "#d95f02"))
+
+# Convert to tidygraph for ggraph plotting
+tg <- as_tbl_graph(g)
+
+# Plot using ggraph
+ggraph(tg, layout = "fr") +  # force-directed layout
+  geom_edge_link(alpha = 0.4, color = "grey60") +
+  geom_node_point(aes(color = behavior), size = 6) +
+  scale_color_manual(values = c("Adaptive" = "#1b9e77",
+                                "Legacy" = "#7570b3",
+                                "Migrated" = "#d95f02")) +
+  theme_graph(base_family = "Helvetica") +
+  labs(title = "Sample Network of Agents by Behavior")
 ```
+
+This study develops an agent-based model (ABM) to investigate how individual adaptive behaviors and social learning shape community vulnerability and migration dynamics under climate-related disaster risks. Agents reside in a network and can adopt one of three behaviors:
+
+-   **Legacy (L):** no proactive mitigation
+-   **Adaptive (A):** engages in risk-reducing action
+-   **Migrated (M):** has exited the system semi-permanently
+
+The model incorporates socio-environmental feedback: disaster frequency and severity evolve as a function of population-wide behavior. The central research question is the following: *Under what conditions can individual's learn to cooperate in order to reduce community vulnerability under varying uncertainty with environmental risk?*
+
+### Disaster Dynamics
+
+At each time step $t$, a binary disaster event is drawn from a Bernoulli distribution with a specified disaster probability $\pi_t$:
+
+$$
+D_t \sim \text {Bernoulli}(\pi_t)
+$$
+
+If $D_t = 1$, a disaster occurs, and its severity $\delta_t$ is sampled from a normal distribution:
+
+$$
+\delta_t \sim \mathcal{N}(\mu_t, \sigma_t)
+$$
+
+Both disaster frequency and damage are behavior-dependent, where the frequency of agents performing either a legacy or adaptive behavior will determine the level of uncertainty with both parameters. This is motivated by the general idea that more adaptive agents will lead to more successful disaster mitigation and resilience, resulting in an environmental state of more certainty (eg. consistency in annual fires of some general degree and month of burn). Alternatively, continuing legacy, or non-adaptive behaviors will lead to more uncertainty with disaster damage and increased probability of disaster (eg. "freak" fires during unexpected month and level of damage).
+
+Let $p_L^t = \frac{|\{i \mid b_i^t = L\}|}{N}$ be the proportion of legacy-behaving agents
+
+Disaster probability $\pi_t$ is given by a sigmoid function to model nonlinear tipping points with legacy behaviors leading to larger probabilities of disaster.\
+$\pi_t = \frac{1}{1 + \exp[-k(p_L^t - \tau)]}$
+
+Additionally, the disaster damage uncertainty evolves with the mean staying the same, and the tails with a larger proportion of legacy individuals
+
+-   $\mu_t = \mu_0$
+-   $\sigma_t = \sigma_0 + \beta \cdot p_L^t$
+
+As legacy behavior increases, both the frequency and unpredictability of disasters rise.
+
+### Vulnerability Dynamics
+
+Each agent $i$ has a vulnerability score $v_i^t \in [0, 1]$. If $v_i^t \geq v_{\text{mig}} = 1$, the agent transitions to the migrated state:
+
+$$
+\text{If } v_i^t \geq v_{\text{mig}}, \text{ then } b_i^{t+1} = M
+$$
+
+#### Individual Impact
+
+If $D_t = 1$, vulnerability increases. Adaptive agents incur reduced damage due to mitigation:
+
+$$
+v_i^{t+1} =
+\begin{cases}
+v_i^t + \delta_t & \text{if } b_i^t = L \\
+v_i^t + (\delta_t - \gamma) & \text{if } b_i^t = A
+\end{cases}
+$$
+
+#### Community Protection Effect
+
+Let $\mathcal{N}(i)$ denote the neighbors of agent $i$, and define a threshold $\theta \in [0,1]$.
+
+We define a protection indicator:
+
+$$
+\text{CommProtect}_i^t =
+\begin{cases}
+1 & \text{if } \dfrac{|\{j \in \mathcal{N}(i) \mid b_j^t = A\}|}{|\mathcal{N}(i)|} \geq \theta \\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+Then, vulnerability update with community protection includes a community protection variable $c$:
+
+$$
+v_i^{t+1} =
+\begin{cases}
+v_i^t + \delta_t & \text{if } \text{CommProtect}_i^t = 0 \land b_i^t = L\\
+v_i^t + (\delta_t - c) & \text{if } \text{CommProtect}_i^t = 0 \land b_i^t = A\\
+v_i^t + (\delta_t - c) & \text{if } \text{CommProtect}_i^t = 1 \land b_i^t = L \\
+v_i^t + (\delta_t - c - \gamma) & \text{if } \text{CommProtect}_i^t = 1 \land b_i^t = A
+\end{cases}
+$$
+
+This reflects both direct and spillover benefits of adaptation.
+
+### Behavioral Transitions
+
+#### Social Learning
+
+Each non-migrated agent $i$ adopts adaptive behavior $A$ if the fraction of neighbors with behavior $A$ exceeds their threshold $\theta_i$:
+
+$$
+\frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} \mathbb{1}[b_j^t = A] \geq \theta_i
+$$
+
+In this case, $b_i^{t+1} = A$ with probability $r$. For the case of adopting an adaptive behavior, however, there is an extra barrier to cross into such behavior required to break inertial behavior. This barrier can be thought as the colloquial "barrier to entry", where adaptive behaviors often require increased initial input from an individual. In the case of fire prevention strategies, this might include financial or time-based costs for the individual to create such defensible space. This cost is modeled via an MCMC, where in addition to consider the adoption of a behavior with $\theta_i$, such adopting must be vetted with another sampling scheme $b$.
+
+#### Stochastic Transitions
+
+To introduce behavioral drift and exploration, at each time-step:
+
+-   With small probability $\epsilon$, any agent may randomly transition to any other behavior $b \in \{L, A, M\}$
+-   This allows recovery from behavioral homogeneity and exploration of alternatives
+
+### Simulation Procedure
+
+At each time-step $t$:
+
+1.  Compute $p_A^t$, $p_L^t$
+2.  Update $\pi_t$, $\mu_t$, $\sigma_t$
+3.  Sample $D_t \sim \mathcal{B}(\pi_t)$
+4.  If $D_t = 1$, sample $\delta_t \sim \mathcal{N}(\mu_t, \sigma_t)$
+5.  Update $v_i^t \to v_i^{t+1}$ using community-aware rules
+6.  Apply social learning and stochastic transitions
+7.  Agents with $v_i^{t+1} \geq v_{\text{mig}}$ migrate
+
+The model runs for $T$ time-steps or until a convergence condition is met.
+
+### Experimental Design
+
+#### Scenario-Level Experiments
+
+-   **Fixed Risk:** $\alpha = 0$, $\beta = 0$
+-   **Coupled Risk:** $\alpha, \beta > 0$
+
+#### Sensitivity Tests
+
+-   Social learning thresholds ($\theta_i$)
+-   Network topology (e.g., small-world, lattice)
+-   Initial conditions ($p_{A0}$, $p_{L0}$)
+-   Adaptation effectiveness ($\gamma$)
+-   Migration threshold ($v_{\text{mig}}$)
+-   Stochastic behavior probability ($\epsilon$)
+
+### Outcome Metrics
+
+-   Behavioral proportions over time: $P_L(t)$, $P_A(t)$, $P_M(t)$
+-   Disaster probability trajectory: $\pi_t$
+-   Average vulnerability: $\bar{v}(t)$
+-   Number of disasters: $\sum_t D_t$
+-   Timing and scale of migration cascades
+
+## Results
+
+\[to be added later\]
+
+## Discussion
+
+\[to be added later\]
+
+## References

@@ -1,0 +1,4 @@
+"scenario","mean_final_migration","sd_final_migration","mean_total_disasters","mean_final_vulnerability"
+"Baseline",0.51,NA,6,0
+"High Risk, Low Adaptation",0.2,NA,3,0
+"Low Risk, High Adaptation",0.33,NA,22,0
