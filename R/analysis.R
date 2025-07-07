@@ -24,13 +24,13 @@ set.seed(42)
 # This section loads all function definitions from the 'R/' subdirectory.
 # Ensure that the 'R' directory exists in your working directory and
 # contains all the necessary .R files for the model.
-source("R/params.R")
-source("R/network.R")
-source("R/agents.R")
-source("R/disaster.R")
-source("R/vulnerability.R")
-source("R/behavior.R")
-source("R/simulation.R")
+source("R/params.R") # checked
+source("R/network.R") # checked
+source("R/agents.R") # checked
+source("R/disaster.R") # checked
+source("R/vulnerability.R") # checked
+source("R/behavior.R") # checked 
+source("R/simulation.R") # checked
 source("R/visualizations.R") # Contains plotting functions, including the dashboard
 source("R/experiments.R")   # Contains functions for running scenario and sensitivity analyses
 
@@ -40,18 +40,19 @@ source("R/experiments.R")   # Contains functions for running scenario and sensit
 
 #' @title Run Full ABM Analysis
 #' @description Orchestrates the entire analysis workflow, including running
-#'   scenario experiments, sensitivity analysis, generating plots, and saving
-#'   all results to disk.
+#'   population collapse experiments, environmental gap analysis, network topology
+#'   analysis, generating plots, and saving all results to disk.
 #' @param save_results Logical, if TRUE, all generated data and plots will be saved to disk.
-#' @param scenario_reps Number of replications to run for each defined scenario.
-#' @param sensitivity_reps Number of replications to run for each parameter
-#'   value in the sensitivity analysis.
+#' @param collapse_reps Number of replications to run for population collapse experiments.
+#' @param gap_reps Number of replications to run for environmental gap analysis.
+#' @param network_reps Number of replications to run for network topology analysis.
 #' @param output_dir Character string, the name of the directory where all
 #'   results (data and plots) will be saved.
 #' @return A list containing all generated results and plots for programmatic access.
 run_full_analysis <- function(save_results = TRUE,
-                              scenario_reps = 20,
-                              sensitivity_reps = 10,
+                              collapse_reps = 20,
+                              gap_reps = 10,
+                              network_reps = 15,
                               output_dir = "abm_results") {
   
   # Create the output directory if it does not already exist
@@ -62,76 +63,142 @@ run_full_analysis <- function(save_results = TRUE,
   cat("=== CLIMATE MIGRATION ABM ANALYSIS ===\n")
   cat("Starting full analysis...\n\n")
   
-  # 1. Execute scenario experiments
-  cat("1. Running scenario experiments...\n")
-  scenario_results <- run_scenario_experiments(n_reps = scenario_reps)
+  # 1. Execute population collapse experiments
+  cat("1. Running population collapse experiments...\n")
+  collapse_results <- run_population_collapse_experiments(n_reps = collapse_reps)
   
   if (save_results) {
-    write.csv(scenario_results,
-              file.path(output_dir, "scenario_results.csv"),
+    write.csv(collapse_results,
+              file.path(output_dir, "population_collapse_results.csv"),
               row.names = FALSE)
-    cat("Scenario results saved to:", file.path(output_dir, "scenario_results.csv"), "\n")
+    cat("Population collapse results saved to:", file.path(output_dir, "population_collapse_results.csv"), "\n")
   }
   
-  # Generate and save scenario comparison plots
-  cat("   Generating scenario plots...\n")
-  scenario_plots <- plot_scenario_comparison(scenario_results)
+  # 2. Execute environmental gap analysis
+  cat("\n2. Running environmental gap analysis...\n")
+  gap_results <- run_environmental_gap_analysis(n_reps = gap_reps)
   
   if (save_results) {
-    ggsave(file.path(output_dir, "scenario_behavior_dynamics.png"),
-           scenario_plots$behavior_dynamics, width = 12, height = 8)
-    ggsave(file.path(output_dir, "scenario_disaster_probability.png"),
-           scenario_plots$disaster_probability, width = 10, height = 6)
-    ggsave(file.path(output_dir, "scenario_avg_vulnerability.png"),
-           scenario_plots$avg_vulnerability, width = 10, height = 6)
-    cat("Scenario plots saved to:", output_dir, "\n")
-  }
-  
-  # 2. Execute sensitivity analysis
-  cat("\n2. Running sensitivity analysis...\n")
-  sensitivity_results <- run_sensitivity_analysis(n_reps = sensitivity_reps)
-  
-  if (save_results) {
-    write.csv(sensitivity_results,
-              file.path(output_dir, "sensitivity_results.csv"),
+    write.csv(gap_results,
+              file.path(output_dir, "environmental_gap_results.csv"),
               row.names = FALSE)
-    cat("Sensitivity results saved to:", file.path(output_dir, "sensitivity_results.csv"), "\n")
+    cat("Environmental gap results saved to:", file.path(output_dir, "environmental_gap_results.csv"), "\n")
   }
   
-  # Generate and save sensitivity analysis plot
-  cat("   Generating sensitivity plots...\n")
-  sensitivity_plot <- plot_sensitivity_analysis(sensitivity_results)
+  # 3. Execute network topology analysis
+  cat("\n3. Running network topology analysis...\n")
+  network_results <- run_network_topology_analysis(n_reps = network_reps)
   
   if (save_results) {
-    ggsave(file.path(output_dir, "sensitivity_analysis_pM_final.png"),
-           sensitivity_plot, width = 14, height = 10)
-    cat("Sensitivity plot saved to:", file.path(output_dir, "sensitivity_analysis_pM_final.png"), "\n")
+    write.csv(network_results,
+              file.path(output_dir, "network_topology_results.csv"),
+              row.names = FALSE)
+    cat("Network topology results saved to:", file.path(output_dir, "network_topology_results.csv"), "\n")
   }
   
-  # 3. Generate and display summary statistics
+  # 4. Generate and display summary statistics
   cat("\n=== SUMMARY STATISTICS ===\n")
   
-  # Calculate and print final migration proportion summary for scenarios
-  final_scenario_summary <- scenario_results %>%
-    group_by(scenario, replication) %>%
-    filter(time == max(time)) %>% # Get results from the last time step of each replication
-    ungroup() %>%
+  # Population collapse summary
+  cat("\nPopulation Collapse Summary:\n")
+  collapse_summary <- collapse_results %>%
     group_by(scenario) %>%
     summarise(
-      mean_final_migration = mean(p_M),
-      sd_final_migration = sd(p_M),
-      mean_total_disasters = mean(n_disasters),
-      mean_final_vulnerability = mean(avg_vulnerability),
+      collapse_rate = mean(collapsed),
+      avg_time_to_collapse = mean(time_to_collapse, na.rm = TRUE),
+      avg_final_migration = mean(final_p_M),
+      avg_max_adaptation = mean(max_p_A),
       .groups = 'drop'
     )
+  print(collapse_summary)
   
-  cat("\nFinal Scenario Summary:\n")
-  print(final_scenario_summary)
+  # Environmental gap summary
+  cat("\nEnvironmental Gap Summary:\n")
+  gap_summary <- gap_results %>%
+    group_by(P_mu_A_scale, D_mu_A_scale, evol_steps) %>%
+    summarise(
+      collapse_rate = mean(collapsed),
+      avg_final_migration = mean(final_p_M),
+      .groups = 'drop'
+    ) %>%
+    arrange(desc(collapse_rate)) %>%
+    head(10) # Show top 10 combinations with highest collapse rates
+  print(gap_summary)
   
+  # Network topology summary
+  cat("\nNetwork Topology Summary:\n")
+  network_summary <- network_results %>%
+    group_by(network_config, network_type) %>%
+    summarise(
+      collapse_rate = mean(collapsed),
+      avg_final_migration = mean(final_p_M),
+      avg_max_adaptation = mean(max_p_A),
+      avg_adaptation_speed = mean(adaptation_speed, na.rm = TRUE),
+      .groups = 'drop'
+    )
+
+  # Save summary statistics
   if (save_results) {
-    write.csv(final_scenario_summary,
-              file.path(output_dir, "final_scenario_summary.csv"),
+    write.csv(collapse_summary,
+              file.path(output_dir, "collapse_summary.csv"),
               row.names = FALSE)
+    write.csv(gap_summary,
+              file.path(output_dir, "gap_summary.csv"),
+              row.names = FALSE)
+    write.csv(network_summary,
+              file.path(output_dir, "network_summary.csv"),
+              row.names = FALSE)
+  }
+  
+  # Generate basic visualization plots (if visualization functions exist)
+  cat("\n4. Generating visualization plots...\n")
+  
+  # Basic collapse rate plot
+  collapse_plot <- ggplot(collapse_summary, aes(x = scenario, y = collapse_rate)) +
+    geom_bar(stat = "identity", fill = "steelblue", alpha = 0.7) +
+    geom_text(aes(label = sprintf("%.2f", collapse_rate)), 
+              vjust = -0.5, size = 3) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    labs(title = "Population Collapse Rate by Scenario",
+         x = "Scenario", y = "Collapse Rate",
+         subtitle = "Proportion of simulations resulting in >95% migration") +
+    ylim(0, 1)
+  
+  # Environmental gap heatmap
+  gap_plot <- gap_results %>%
+    group_by(P_mu_A_scale, D_mu_A_scale) %>%
+    summarise(collapse_rate = mean(collapsed), .groups = 'drop') %>%
+    ggplot(aes(x = P_mu_A_scale, y = D_mu_A_scale, fill = collapse_rate)) +
+    geom_tile() +
+    scale_fill_viridis_c(name = "Collapse\nRate") +
+    theme_minimal() +
+    labs(title = "Population Collapse Risk by Environmental Gap",
+         x = "Disaster Probability Scale Factor",
+         y = "Disaster Severity Scale Factor",
+         subtitle = "Higher values = greater gap between expected vs actual conditions")
+  
+  # Network comparison plot
+  network_plot <- ggplot(network_summary, aes(x = network_config, y = collapse_rate, fill = network_type)) +
+    geom_bar(stat = "identity", alpha = 0.7) +
+    geom_text(aes(label = sprintf("%.2f", collapse_rate)), 
+              vjust = -0.5, size = 3) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    labs(title = "Population Collapse Rate by Network Configuration",
+         x = "Network Configuration", y = "Collapse Rate",
+         fill = "Network Type") +
+    ylim(0, 1)
+  
+  # Save plots
+  if (save_results) {
+    ggsave(file.path(output_dir, "collapse_rates_by_scenario.png"),
+           collapse_plot, width = 12, height = 8)
+    ggsave(file.path(output_dir, "environmental_gap_heatmap.png"),
+           gap_plot, width = 10, height = 8)
+    ggsave(file.path(output_dir, "network_collapse_comparison.png"),
+           network_plot, width = 12, height = 8)
+    cat("Visualization plots saved to:", output_dir, "\n")
   }
   
   # Save the complete R workspace for full reproducibility
@@ -145,11 +212,15 @@ run_full_analysis <- function(save_results = TRUE,
   
   # Return all generated objects for interactive analysis
   invisible(list(
-    scenario_results = scenario_results,
-    sensitivity_results = sensitivity_results,
-    scenario_plots = scenario_plots,
-    sensitivity_plot = sensitivity_plot,
-    final_scenario_summary = final_scenario_summary
+    collapse_results = collapse_results,
+    gap_results = gap_results,
+    network_results = network_results,
+    collapse_summary = collapse_summary,
+    gap_summary = gap_summary,
+    network_summary = network_summary,
+    collapse_plot = collapse_plot,
+    gap_plot = gap_plot,
+    network_plot = network_plot
   ))
 }
 
@@ -158,20 +229,41 @@ run_full_analysis <- function(save_results = TRUE,
 # =============================================================================
 
 # To quickly test the model and view the dashboard visualizations for a single simulation run:
-cat("\nRunning a single test simulation with dashboard visualization...\n")
-test_result <- test_model_dashboard(show_plots = TRUE, save_plots = TRUE)
+# NOTE: This requires the test_model_dashboard function to exist in visualizations.R
+cat("\nTesting basic simulation functionality...\n")
 
-# To execute the full analysis (scenario experiments and sensitivity analysis),
-# uncomment the line below. This process can be time-consuming depending on
+# Test with default parameters
+test_params <- create_default_params()
+cat("Testing single simulation run...\n")
+test_result <- run_simulation(test_params, verbose = TRUE)
+cat("Single simulation completed successfully!\n")
+cat(sprintf("Final results: p_L=%.3f, p_A=%.3f, p_M=%.3f\n", 
+            tail(test_result$p_L, 1), tail(test_result$p_A, 1), tail(test_result$p_M, 1)))
+
+# If test_model_dashboard function exists, uncomment the line below:
+# test_result <- test_model_dashboard(show_plots = TRUE, save_plots = TRUE)
+
+# To execute the full analysis (population collapse, environmental gap, and network topology analysis),
+# uncomment the lines below. This process can be time-consuming depending on
 # the number of replications and core availability.
 # Results (data and plots) will be saved to the specified output directory.
-'''
-cat("\nRunning full analysis (this may take a while)...\n")
-full_analysis_results <- run_full_analysis(
-  save_results = TRUE,
-  scenario_reps = 1,    # Number of replications for each scenario
-  sensitivity_reps = 1, # Number of replications for each sensitivity parameter value
-  output_dir = "climate_abm_results"
-)
-'''
-cat("\nABM analysis script execution finished. Check 'test_plots/' for dashboard plots or uncomment `run_full_analysis()` for comprehensive results.\n")
+# 
+cat("\nTo run full analysis, uncomment the lines below:\n")
+cat("# full_analysis_results <- run_full_analysis(\n")
+cat("#   save_results = TRUE,\n")
+cat("#   collapse_reps = 5,    # Number of replications for population collapse experiments\n")
+cat("#   gap_reps = 3,         # Number of replications for environmental gap analysis\n")
+cat("#   network_reps = 5,     # Number of replications for network topology analysis\n")
+cat("#   output_dir = \"climate_abm_results\"\n")
+cat("# )\n")
+
+# Uncomment below to actually run the analysis:
+# full_analysis_results <- run_full_analysis(
+#   save_results = TRUE,
+#   collapse_reps = 5,    # Number of replications for population collapse experiments
+#   gap_reps = 3,         # Number of replications for environmental gap analysis  
+#   network_reps = 5,     # Number of replications for network topology analysis
+#   output_dir = "climate_abm_results"
+# )
+
+cat("\nABM analysis script loaded. Run the analysis functions as needed.\n")

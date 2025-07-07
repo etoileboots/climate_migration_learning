@@ -38,15 +38,15 @@ initialize_agents <- function(params) {
     vulnerability = vulnerability,
     migrated = FALSE,
     migrated_at_time = NA,
-    theta_i = runif(N, theta_min, theta_max), # Social learning threshold
-    kappa_i = runif(N, kappa_min, kappa_max) # Adaptive behavior adoption threhsold 
+    theta_i = theta_min, # LET's KEEP THIS CONSTANT FOR NOW runif(N, theta_min, theta_max), # Social learning threshold
+    kappa_i = kappa_min # LETS KEEP THIS CONSTANT FOR NOW runif(N, kappa_min, kappa_max) # Adaptive behavior adoption threhsold 
   )
-  agents
-# Create the network for agents
-g <- create_network(N = params$N,
-                    network_type = params$network_type,
-                    rewire_prob = params$rewire_prob,
-                    k_nearest = params$k_nearest)
-
-return(list(agents = agents, network = g))
+    
+  # Create the network for agents
+  g <- create_network(N = params$N,
+                      network_type = params$network_type, 
+                      rewire_prob = params$rewire_prob,
+                      k_nearest = params$k_nearest)
+  
+  return(list(agents = agents, network = g))
 }

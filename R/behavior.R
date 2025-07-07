@@ -19,8 +19,12 @@ apply_social_learning <- function(agents, network, params) {
   N <- nrow(agents)
   
   for (i in 1:N) {
-    # Only Legacy agents who have not migrated can potentially switcj
+    # Only Legacy agents who have not migrated can potentially switch
     if (agents$migrated[i]) {
+      # mutation possibility for migrated individuals 
+      runif(1) < params$epsilon) {
+        agents$migrated[i] = FALSE
+        agents$behavior[i] <- sample(c("A", "L"), 1)
       next
     }
     
@@ -48,7 +52,7 @@ apply_social_learning <- function(agents, network, params) {
       adaptive_fraction <- adaptive_neighbors_count / total_active_neighbors_count
       legacy_fraction <- legacy_neighbors_count / total_active_neighbors_count
       current_behavior <- agents$behavior[i]
-      theta <- agents$theta_i[i]
+      theta <- agents$theta_i[i] # this is with the assumption of heterogenous adaptation rates (which we will incorporate later...)
       
       # In the case of switching from Legacy to Adaptive
       if (current_behavior == "L" && adaptive_fraction >= theta) {
@@ -67,6 +71,14 @@ apply_social_learning <- function(agents, network, params) {
         if (runif(1) < params$r) {
           agents$behavior[i] <- "L"
         }
+      }
+    }
+    # run mutation
+    if (runif(1) < params$epsilon) {
+      if (agents$behavior[i] == "L") {
+        agents$behavior[i] <- "A"
+      } else if (agents$behavior[i] == "A") {
+        agents$behavior[i] <- "L"
       }
     }
   }

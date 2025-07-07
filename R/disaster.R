@@ -11,15 +11,17 @@
 #' @param params List, simulation parameters including `use_sigmoid`, `k_sigmoid`,
 #'   `tau_sigmoid`, `pi_0`, and `alpha`.
 #' @return Numeric, the calculated probability of disaster (pi_t).
-compute_disaster_probability <- function(p_L, params) {
-  if (params$use_sigmoid) {
-    # Sigmoid model: Probability increases with p_L, controlled by steepness and threshold
-    1 / (1 + exp(-params$k_sigmoid * (p_L - params$tau_sigmoid))) # may want to change this to a delayed response model 
-  } else {
-    # Linear model: Probability increases linearly with p_L
-    pmin(1, pmax(0, params$pi_0 + params$alpha * p_L))
-  }
-}
+
+# compute_disaster_probability <- function(p_L, params) {
+#   if (params$use_sigmoid) {
+#     # Sigmoid model: Probability increases with p_L, controlled by steepness and threshold
+#     1 / (1 + exp(-params$k_sigmoid * (p_L - params$tau_sigmoid))) # may want to change this to a delayed response model 
+#   } else {
+#     # Linear model: Probability increases linearly with p_L
+#     pmin(1, pmax(0, params$pi_0 + params$alpha * p_L))
+#   }
+# }
+
 
 #' @title Sample Disaster Occurrence and Severity
 #' @description Determines if a disaster occurs in the current time step and, if so,
@@ -46,23 +48,31 @@ sample_disaster <- function(agents, params) {
   p_L <- sum(active_agents$behavior == "L") / N_active
   p_A <- sum(active_agents$behavior == "A") / N_active
   
-  # Calculate disaster probability (pi_t) based on p_L
-  pi_t <- compute_disaster_probability(p_L, params)
+  # Calculate disaster probability (pi_t)
+  if (params$adaptation_switch == TRUE) {
+    pi_t <- params$P_mu_E * params$P_mu_A_scale
+  } else {
+    pi_t <- params$P_mu_E
+  }
   
   # Determine if a disaster occurs based on pi_t
   disaster_occurs <- rbinom(1, 1, pi_t) == 1
+  severity <- 0  # Default severity to 0
   
-  severity <- 0 # Default severity to 0
-  
-  if (disaster_occurs) {
-    # Calculate disaster severity from a normal distribution
-    # Mean severity (mu_t) is fixed, but standard deviation (sigma_t) increases with p_L
-    mu_t <- params$mu_0
-    sigma_t <- params$sigma_0 + params$beta * p_L
-    severity <- rnorm(1, mu_t, sigma_t)
-    severity <- pmax(0, severity)  # Ensure severity is non-negative
+  # Determine severity based on whether adaptation has occurred
+  if (disaster_occurs & params$adaptation_switch == TRUE) {
+    mu_d <- params$D_mu_E * params$D_mu_A_scale
+    sigma_d <- params$D_sigma_E * params$D_sigma_A_scale
+  } else {
+    mu_d <- params$D_mu_E
+    sigma_d <- params$D_sigma_E
   }
   
+  # Calculate disaster severity from a normal distribution
+  severity <- rnorm(1, mu_d, sigma_d)
+  severity <- pmax(0, severity)  # Ensure severity is non-negative
+  
+  # Return disaster results
   list(
     occurs = disaster_occurs,
     severity = severity,

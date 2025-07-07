@@ -6,25 +6,66 @@ editor: visual
 
 ## Introduction & Motivation
 
-When it comes to climate change, there are a couple things for certain: the climate is changing, and that such changes will force speedy adaptation to survive in novel situations. This shift in climate has been spurred by human activity and led to globally increases in overall surface temperatures and uncertainty surrounding the strength and frequency of different weather conditions.
+While the Earth's climate is in constant flux, current climate change is proceeding at rates unobserved over many recent millennia as a result of human activities largely triggered by the industrial revolution ([IPCC, 2021)](https://www.cambridge.org/core/books/climate-change-2021-the-physical-science-basis/technical-summary/C7CCEAD271B10F328C6E50C03A0F4F02). Such changes come with a few symptoms, including but not limited to global temperature rise, ice sheet melting, and increased frequency of extreme weather events. Such weather events include increased record high temperatures, intense rainfall, and wildfire uncertainty ([USGCRP, 2017](https://www.nrc.gov/docs/ML1900/ML19008A410.pdf)).
 
-Despite the clear knowledge of probable future impacts, communities and individuals often respond to climate-related risks with delayed response and denial. The effects of climate change are considered distantly, both in time and space ([Markman, 2018](https://hbr.org/2018/10/why-people-arent-motivated-to-address-climate-change)). Thus, this behavior may be best understood when considering human decision making under uncertainty, as opposed to risk. While these terms are often used interchangeably, in this paper, we continue with defining risk as decision making under known outcome probabilities and state space, and uncertainty being decision making under unknown outcome probabilities and state space ([Knight](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref35), [1921](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref35); [Keynes, 1921](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref33); [Johnson et al, 2022](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref30)).
+With knowledge of present changes, multi-level and multi-national institutions are working to enhance their climate-resilience programs for successful adaptation to the unprecedented state we live in. Successful climate adaptation starts with an understanding of various risks and possible uncertainties. In this paper, risk is defined as decision making under known outcome probabilities and state space, and uncertainty being decision making under unknown outcome probabilities and state space ([Knight](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref35), [1921](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref35); [Keynes, 1921](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref33); [Johnson et al, 2022](https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/form-of-uncertainty-affects-selection-for-social-learning/18B581D90A78CE094194C24C59757F5B#ref30)). Thus, the task of facilitating community climate-adaptation turns into the task of proper management of both the known and unknown probabilities regarding various climate-change effects. The consequences of inaccurate prediction of risk and a disregard for uncertainty can be dire. This study aims to understand the consequence of inaccuracies in climate-risk-uncertainty prediction through looking one climate effect and response: adaptation strategies to increased frequency and volatility of wild fires.
 
-So, how can communities make decisions in the face of uncertainty versus risk? What will it take for both individuals and communities to mitigate and adapt to such risk and uncertainty? 
+The context for this model is largely inspired by the January and February 2025 Palisades and Eaton Fires in Los Angeles, CA, which took 29 lives and engulfed over 23,000 acres and 16,000 homes ([MacCarthy & Richter, 2025](https://www.wri.org/insights/los-angeles-fires-january-2025-explained)). A recent attribution study estimated that climate change made L.A.’s fires 35% more likely to occur ([Barnes et al., 2025](https://www.worldweatherattribution.org/climate-change-increased-the-likelihood-of-wildfire-disaster-in-highly-exposed-los-angeles-area/)). Despite clear signals, many residents did not migrate or adopt long-term adaptation strategies. This is likely a result of inaccurate representation of the true risk of disaster in the area, which costed the community lives, infrastructure, and money.
 
-This study explores these questions through an agent-based model (ABM) simulating a social network under increasing threat of climate-related disasters, focusing particularly on the case of wildfires. The context for this model is largely inspired by the January and February 2025 Palisades and Eaton Fires in Los Angeles, CA, which took 29 lives and engulfed over 23,000 acres and 16,000 homes ([MacCarthy & Richter, 2025](https://www.wri.org/insights/los-angeles-fires-january-2025-explained)). A recent attribution study estimated that climate change made L.A.’s fires 35% more likely to occur ([source](https://www.worldweatherattribution.org/climate-change-increased-the-likelihood-of-wildfire-disaster-in-highly-exposed-los-angeles-area/)). Despite clear signals, many residents did not migrate or adopt long-term adaptation strategies.
+An accurate prediction of risk and accounting for uncertainty may have sparked earlier community adaptation efforts such as the building of a fire-adapted community (FAC), increased public awareness, and defensible space planning. It's clear that the older schema of wildfire planning is insufficient in the accelerating onset of such disasters. Thus, this study focuses on the problem of accurate disaster prediction and mitigation strategies. The central research questions are as follows:
 
-This behavior is consistant with broader patterns: migration or adaptive behaviors often occurs only after extreme destruction, rather in the anticipation of growing risk ([Price et al., 2024](https://www.nature.com/articles/s41467-024-50630-4)). In other words, people tend to adapt reactively rather than proactively.
+1.  How does a community adapted to a certain of wildfire risk and uncertainty re-adapt or collapse with changes to such risk and uncertainty?
+2.   How does the rate of change from a previous to new wildfire risk and uncertainty affect the ability for a community to adapt?
 
-To examine the underlying dynamics of this delayed response, the ABM simulates agents with different behavioral strategies (adaptive, legacy, and migrated), varying perceptions of disaster risk, and social learning rules. It is important to note here that this study distinguishes between risk (known probabilities of disaster) and uncertainty (unknown probabilities), inspired by frameworks within decision theory (Jones, ),
+To study these two main research questions, the researchers build an agent based model (ABM) to simulate the evolution of legacy, adaptive, and migratory behaviors under disaster probability.
 
 ## Literature Review:
 
-\[to be added later\]
+-   **Theoretical foundation:** uncertainty vs risk in decision making Jones +++
+
+    -   explain how we situate our work in risk –\> uncertainty transformation, and decision making policies through this
+
+    -   Johnson & Tversky
+
+-   **Behavioral modeling:** Section on cultural evolution from Jones
+
+    -   Look to...
+
+        -   Henrich (2004)
+
+        -   Boyd & Richerson
+
+    -   Situating the adoption of behavior as the adoption of behavioral culture
+
+-   **Methodological 1:** The importance of network structures in determining coarse-grained behaviors
+
+    -   minority-majority
+
+    -   Granovetter threshold models
+
+    -   Centola & Macy
+
+-   **Methodological 2:** ABM for Climate and Migration
+
+    -   General defense of ABM:
+
+        -   Interpretability of an ABM (the cubic chicken)
+
+    -   Cooperation methods in ABM
+
+    -   [Specific ABM of climate migration](https://www.google.com/search?q=Hassani-Mahmooei+%26+Parris+(2012)+on+ABMs+of+climate+migration.&rlz=1C5CHFA_enUS913US913&oq=Hassani-Mahmooei+%26+Parris+(2012)+on+ABMs+of+climate+migration.&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBBzkzOGowajmoAgCwAgA&sourceid=chrome&ie=UTF-8)
+
+    -   [Coupling environmental models with decision-making agents](https://esd.copernicus.org/articles/15/947/2024/)
+
+-   **APPLIED:** Broad climate-change research (wildfire research)
+
+    -   Whats predicted for wild fires
+
+    -   
 
 ## Methods
 
-### Overview
+### Agent Properties 
 
 ```{r}
 #| echo: false
@@ -64,13 +105,96 @@ ggraph(tg, layout = "fr") +  # force-directed layout
   labs(title = "Sample Network of Agents by Behavior")
 ```
 
-This study develops an agent-based model (ABM) to investigate how individual adaptive behaviors and social learning shape community vulnerability and migration dynamics under climate-related disaster risks. Agents reside in a network and can adopt one of three behaviors:
+This plot provides an illustrative example of the network structure for a small number of agents. In full simulations, the model typically uses `N = 1000` agents.
+
+Agents reside in a network and at any given time step can have one of three behavioral states:
 
 -   **Legacy (L):** no proactive mitigation
+
+<!-- -->
+
 -   **Adaptive (A):** engages in risk-reducing action
 -   **Migrated (M):** has exited the system semi-permanently
 
-The model incorporates socio-environmental feedback: disaster frequency and severity evolve as a function of population-wide behavior. The central research question is the following: *Under what conditions can individual's learn to cooperate in order to reduce community vulnerability under varying uncertainty with environmental risk?*
+In addition to a current behavior, every agent also has a set of attributes that determine their social status, vulnerability, and learning strategies. The properties of each agent is listed below:
+
+-   $\theta_i$: A social threshold for agent i to learn a new behavioral strategy (how many neighbors need to be performing a certain behavior to consider adopting this behavior)
+
+-   $\kappa_i$: A personal adaptation cost for agent i to transition to an adaptive behavior
+
+-   $v_i$: Current vulnerability of agent i (determined by their behavior and neighborhood)
+
+### Global Properties 
+
+#### Simulation set-up (not key): 
+
+-   $N$: Number of agents in the system
+
+-   $T$: Simulation steps
+
+-   $p_{L_0}$: Proportion of legacy agents at $t=0$
+
+-   $p_{A_0}$: Proportion of adaptive agents at $t=0$
+
+-   Network type + Rewiring probability
+
+-   $[\theta_{min}, \theta_{max}]$: The lower and upper bounds for proportion of neighbors required to be performing a certain behavior.
+
+-   $v_L$: Initialized vulnerability of legacy behavior individuals
+
+-   $v_A$: Initialized vulnerability of adaptive behavior individuals
+
+#### Social Learning Parameters 
+
+-   $r$: Base probability of adapting a specific behavior when their social conditions are met
+
+-   $\epsilon$: Probability of random mutation from one behavior to another
+
+#### Disaster Dynamics Probabilities
+
+##### Rate of Disaster
+
+-   $P(\mu_E)$: The expected probability of disaster
+
+-   $\sigma_E$: The initial deviation (uncertainty) in disaster occurrences
+
+##### Intensity of disaster 
+
+-   $D_{\mu_E}$: Initial/Expected disaster severity mean
+
+-   $D_{\sigma_E}$: Initial/Expected disaster severity standard deviation
+
+#### Vulnerability Dynamics
+
+-   $v_{mig}$: Threshold of vulnerability required for agent to migrate
+
+-   $c$: Reduction in vulnerability for agents under neighborhood community protection
+
+-   $\gamma$: Individual reduction in vulnerability from adaptation
+
+-   Community protection threshold (proportion of adaptive neighbors needed for protection) \*\* need to find a good variable for this
+
+### Experimental Properties
+
+##### Rate of disaster evolution: 
+
+-   $\lambda$: The rate of change from previous to new disaster probability
+
+##### Probability of disaster 
+
+-   $\mu_{A_{scale}}$: How many scales off the expected/equilibrium probability of disaster is from the actual probability of disaster
+
+-   $\sigma_{A_{scale}}$: How many scales off from the expected standard deviation of probability of disaster the actual probability of disaster is
+
+##### Intensity of disaster 
+
+-   $D_{\mu_{A_{scale}}}$: How many scales off the actual severity of the disaster damage is
+
+-   $D_{\sigma_{A_{scale}}}$: How many scales off the standard deviation of the actual severity of the disaster damage is
+
+### General Simulation Overview
+
+![Figure 1. Flowchart of simulation dynamics.](images/simulation_flowchart.png)
 
 ### Disaster Dynamics
 
@@ -86,23 +210,11 @@ $$
 \delta_t \sim \mathcal{N}(\mu_t, \sigma_t)
 $$
 
-Both disaster frequency and damage are behavior-dependent, where the frequency of agents performing either a legacy or adaptive behavior will determine the level of uncertainty with both parameters. This is motivated by the general idea that more adaptive agents will lead to more successful disaster mitigation and resilience, resulting in an environmental state of more certainty (eg. consistency in annual fires of some general degree and month of burn). Alternatively, continuing legacy, or non-adaptive behaviors will lead to more uncertainty with disaster damage and increased probability of disaster (eg. "freak" fires during unexpected month and level of damage).
-
-Let $p_L^t = \frac{|\{i \mid b_i^t = L\}|}{N}$ be the proportion of legacy-behaving agents
-
-Disaster probability $\pi_t$ is given by a sigmoid function to model nonlinear tipping points with legacy behaviors leading to larger probabilities of disaster.\
-$\pi_t = \frac{1}{1 + \exp[-k(p_L^t - \tau)]}$
-
-Additionally, the disaster damage uncertainty evolves with the mean staying the same, and the tails with a larger proportion of legacy individuals
-
--   $\mu_t = \mu_0$
--   $\sigma_t = \sigma_0 + \beta \cdot p_L^t$
-
-As legacy behavior increases, both the frequency and unpredictability of disasters rise.
+This severity value will directly impact agent vulnerability.
 
 ### Vulnerability Dynamics
 
-Each agent $i$ has a vulnerability score $v_i^t \in [0, 1]$. If $v_i^t \geq v_{\text{mig}} = 1$, the agent transitions to the migrated state:
+Each agent $i$ has a vulnerability score $v_i^t \in [0, 1]$. If $v_i^t \geq v_{\text{mig}}$, the agent transitions to the migrated state:
 
 $$
 \text{If } v_i^t \geq v_{\text{mig}}, \text{ then } b_i^{t+1} = M
@@ -160,47 +272,94 @@ $$
 
 In this case, $b_i^{t+1} = A$ with probability $r$. For the case of adopting an adaptive behavior, however, there is an extra barrier to cross into such behavior required to break inertial behavior. This barrier can be thought as the colloquial "barrier to entry", where adaptive behaviors often require increased initial input from an individual. In the case of fire prevention strategies, this might include financial or time-based costs for the individual to create such defensible space. This cost is modeled via an MCMC, where in addition to consider the adoption of a behavior with $\theta_i$, such adopting must be vetted with another sampling scheme $b$.
 
-#### Stochastic Transitions
+#### Stochastic Transitions via Mutation
 
 To introduce behavioral drift and exploration, at each time-step:
 
 -   With small probability $\epsilon$, any agent may randomly transition to any other behavior $b \in \{L, A, M\}$
+
+<!-- -->
+
 -   This allows recovery from behavioral homogeneity and exploration of alternatives
 
-### Simulation Procedure
+## Experiments
 
-At each time-step $t$:
+### Experiment 1.a). Impact of Disparities in Expected vs Actual Disaster Occurrence Probability *(Risk)*
 
-1.  Compute $p_A^t$, $p_L^t$
-2.  Update $\pi_t$, $\mu_t$, $\sigma_t$
-3.  Sample $D_t \sim \mathcal{B}(\pi_t)$
-4.  If $D_t = 1$, sample $\delta_t \sim \mathcal{N}(\mu_t, \sigma_t)$
-5.  Update $v_i^t \to v_i^{t+1}$ using community-aware rules
-6.  Apply social learning and stochastic transitions
-7.  Agents with $v_i^{t+1} \geq v_{\text{mig}}$ migrate
+**Guiding Question:** How does varying differences in the expected versus actual probability of disaster (i.e. the rate of disaster occurrence) impact community survival dynamics?
 
-The model runs for $T$ time-steps or until a convergence condition is met.
+**Real World Analogue:** A community is adapted to expect and manage an annual wild-fire season, but is instead, subjected to quarterly wildfires ($\mu_{A_{scale}}=4$).
 
-### Experimental Design
+| Simulation Type                                | Parameters of Interest     |
+|------------------------------------|------------------------------------|
+| Severe Overestimation of Disaster Probability  | $\mu_{A_{scale}} < 0.5$    |
+| Mild Overestimation of Disaster Probability    | $0.5 <\mu_{A_{scale}} < 1$ |
+| Mild Underestimation of Disaster Probability   | $1 <\mu_{A_{scale}} < 1.5$ |
+| Severe Underestimation of Disaster Probability | $\mu_{A_{scale}} > 1.5$    |
 
-#### Scenario-Level Experiments
+### Experiment 1.b) Impact of Disparities in Expected vs Actual Disaster Occurrence Standard Deviation *(Uncertainty)*
 
--   **Fixed Risk:** $\alpha = 0$, $\beta = 0$
--   **Coupled Risk:** $\alpha, \beta > 0$
+**Guiding Question:** How does adjusting the uncertainty in the probability of disaster from an equilibrium (adapted) state impact community survival dynamics?
 
-#### Sensitivity Tests
+**Real World Analogue:** A community is adapted to manage an annual wildfire season during a specific month of the year (eg. summer), but instead, is experiencing "freak" wildfires at unexpected months.
+
+| Simulation Type | Parameters of Interest |
+|------------------------------------|------------------------------------|
+| Severe Overestimation of Disaster Occurrence Deviation | $\sigma_{A_{scale}} < 0.5$ |
+| Mild Overestimation of Disaster Occurrence Deviation | $0.5 <\sigma_{A_{scale}} < 1$ |
+| Mild Underestimation of Disaster Occurrence Deviation | $1 <\sigma_{A_{scale}} < 1.5$ |
+| Severe Underestimation of Disaster Occurrence Deviation | $\sigma_{A_{scale}} > 1.5$ |
+
+### Experiment 2.a) Impact of Disparities in Expected vs Actual Disaster Severity Mean *(Risk)*
+
+**Guiding Question:** How do differences in the expected and actual mean severity of a disaster impact community survival?
+
+**Real World Analogue:** A community is adapted to manage wildfires of an average burn area of 50 acres, but is instead experiences wildfires burning over 200 acres, burning down homes and vital infrastructure.
+
+| Simulation Type | Parameters of Interest |
+|------------------------------------|------------------------------------|
+| Severe Overestimation of Disaster Severity | $D_{\mu_{A_{scale}}} < 0.5$ |
+| Mild Overestimation of Disaster Severity | $0.5 <D_{\mu_{A_{scale}}} < 1$ |
+| Mild Underestimation of Disaster Severity | $1 <D_{\mu_{A_{scale}}} < 1.5$ |
+| Severe Underestimation of Disaster Severity | $D_{\mu_{A_{scale}}} > 1.5$ |
+
+### Experiment 2.b) Impact of Disparities in Expected vs Actual Disaster Severity Standard Deviation *(Uncertainty)*
+
+**Guiding Question:** How does changing the uncertainty in the severity of a disaster impact community survival dynamics?
+
+**Real World Analogue:** A community is adapted to manage wildfires of an average burn area of 50 acres and a specific level of community damage, but is instead experiences successive wildfires of 20 burn acres, 200 burn acres, and 500 burn acres.
+
+| Simulation Type | Parameters of Interest |
+|------------------------------------|------------------------------------|
+| Severe Overestimation of Disaster Severity Deviation | $D_{\sigma_{A_{scale}}} < 0.5$ |
+| Mild Overestimation of Disaster Severity Deviation | $0.5 <D_{\sigma_{A_{scale}}} < 1$ |
+| Mild Underestimation of Disaster Severity Deviation | $1 <D_{\sigma_{A_{scale}}} < 1.5$ |
+| Severe Underestimation of Disaster Severity Deviation | $D_{\sigma_{A_{scale}}} > 1.5$ |
+
+### Experiment 3: Impact of Rate of Disaster Progression on Community Survival
+
+**Guiding Question:** How does the rate of disaster onset impact community survival?
+
+**Real World Analogue:** It would be intuitive to expect that a community given 200 years to adapt to a new disaster paradigm would be less likely to collapse (through total migration) than one that was given 5 years.
+
+| Simulation Type           | Parameters of Interest     |
+|---------------------------|----------------------------|
+| Instantaneous Transition  | $\lambda = 0$              |
+| Rapid transition          | $1 \leq \lambda \leq 15$   |
+| Medium-length transition  | $16 \leq \lambda \leq 50$  |
+| Gradual transition        | $51 \leq \lambda \leq 200$ |
+
+### Sensitivity Tests
 
 -   Social learning thresholds ($\theta_i$)
 -   Network topology (e.g., small-world, lattice)
 -   Initial conditions ($p_{A0}$, $p_{L0}$)
--   Adaptation effectiveness ($\gamma$)
 -   Migration threshold ($v_{\text{mig}}$)
--   Stochastic behavior probability ($\epsilon$)
+-   Mutation probability ($\epsilon$)
 
 ### Outcome Metrics
 
 -   Behavioral proportions over time: $P_L(t)$, $P_A(t)$, $P_M(t)$
--   Disaster probability trajectory: $\pi_t$
 -   Average vulnerability: $\bar{v}(t)$
 -   Number of disasters: $\sum_t D_t$
 -   Timing and scale of migration cascades

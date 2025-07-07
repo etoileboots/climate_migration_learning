@@ -15,7 +15,7 @@ run_simulation <- function(params, verbose = TRUE) {
   init_state <- initialize_agents(params) # This function returns a list with agents and network
   agents <- init_state$agents
   network <- init_state$network
-  
+
   # Initialize data frame to store simulation results
   results <- data.frame(
     time = integer(),
@@ -36,7 +36,7 @@ run_simulation <- function(params, verbose = TRUE) {
   for (t in 1:params$T) {
     # Store the number of migrated agents before this step's migration phase
     migrated_before_step <- sum(agents$migrated)
-    
+    adapted_before_step <- sum(agents$behavior == "A")
     # 1. Sample disaster occurrence and severity for the current time step
     disaster <- sample_disaster(agents, params)
     
@@ -73,6 +73,11 @@ run_simulation <- function(params, verbose = TRUE) {
       avg_vuln_active <- 0 # If no active agents, average vulnerability is 0
     }
     
+    # Check for equilibrium state (no change in adaptors or migrations)
+    new_adaptors <- sum(agents$behavior == "A") - adapted_before_step
+    if (new_adaptors == 0 && new_migrations_this_step==0){
+      params$adaptation_switch = TRUE 
+    }
     # Record current time step's results
     results <- rbind(results, data.frame(
       time = t,
