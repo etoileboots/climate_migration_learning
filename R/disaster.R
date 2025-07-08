@@ -25,15 +25,13 @@
 
 #' @title Sample Disaster Occurrence and Severity
 #' @description Determines if a disaster occurs in the current time step and, if so,
-#'   calculates its severity based on agent states and parameters.
+#'   calculates its severity.
 #' @param agents A data.frame of agents, including their `migrated` and `behavior` status.
 #' @param params List, simulation parameters including `mu_0`, `sigma_0`, and `beta`.
 #' @return A list containing:
 #'   - `occurs`: Logical, TRUE if a disaster occurred, FALSE otherwise.
 #'   - `severity`: Numeric, the severity of the disaster (0 if no disaster).
 #'   - `pi_t`: Numeric, the calculated disaster probability for this step.
-#'   - `p_L`: Numeric, the proportion of Legacy agents.
-#'   - `p_A`: Numeric, the proportion of Adaptive agents.
 sample_disaster <- function(agents, params) {
   # Identify and count active (non-migrated) agents
   active_agents <- agents[!agents$migrated, ]
